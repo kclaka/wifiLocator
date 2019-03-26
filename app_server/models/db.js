@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
 var dbURI = 'mongodb://localhost/Loc8r';
-mongoose.connect(dbURI, { useNewUrlParser: true });
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function () {
     console.log('Mongoose connected to ' + dbURI);
@@ -61,4 +64,7 @@ var locationschema = new mongoose.Schema({
     openingTimes : [openingTimeSchema],
     reviews: [reviewSchema]
 });
+
+mongoose.model('Location', locationschema, 'Locations')
+
 
